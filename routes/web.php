@@ -2,22 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
+use App\Http\Controllers\DocumentController;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('form');
 });
 
 Route::get('/upload', [ImageUploadController::class, 'create'])->name('upload.form');
 Route::post('/upload', [ImageUploadController::class, 'store'])->name('upload.image');
+
+Route::post('/documents/submit', [DocumentController::class, 'submit'])->name('documents.submit');
+
