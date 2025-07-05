@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BRAC Bank Statement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+
+    <style>
+        @media print {
+            .page {
+                page-break-after: always;
+            }
+        }
+
+        body {
+            font-family: 'Courier Prime', monospace;
+        }
+
+        .transaction-table{
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10pt;
+        }
+
+        .transaction-table tr {
+            text-align: left;
+        }
+
+        .transaction-table th, td {
+            padding: 2px 4px;
+            }
+
+            .transaction-table th {
+                border-top: 1px dashed #000;
+                border-bottom: 1px dashed #000;
+                vertical-align: middle;
+                height: 7mm;
+            }
+
+            .transaction-table td {
+                padding-top: 2px;
+                vertical-align: top;
+                height: 10mm;
+            }
+    </style>
+</head>
+
+<body class="bg-white text-[10pt] leading-tight text-black">
+
+    <div class="page relative mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-start mb-6 relative">
+            <img src="brac-logo.png" class="h-10">
+            <div class="text-[9pt]">
+                <strong>BRAC Bank PLC.</strong><br>
+                Anik Tower<br>
+                220/B, Tejgaon Gulshan Link Road<br>
+                Tejgaon, Dhaka 1208, Bangladesh<br>
+
+                <table>
+                    <tr>
+                        <td>Phone</td>
+                        <td>:</td>
+                        <td>+88 02 8801301-32</td>
+                    </tr>
+                    <tr>
+                        <td>Fax</td>
+                        <td>:</td>
+                        <td>+88 02 9898910</td>
+                    </tr>
+                    <tr>
+                        <td>SWIFT</td>
+                        <td>:</td>
+                        <td>BRAKBDDH</td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td>:</td>
+                        <td>enquiry@bracbank.com</td>
+                    </tr>
+                    <tr>
+                        <td>Website</td>
+                        <td>:</td>
+                        <td>www.bracbank.com</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Account Info -->
+        <div class="flex justify-between mb-4 relative">
+            <div>
+                <strong>MD ADNAN REDUANUL MOBTADI</strong><br><br>
+                C/O-MD JAHANGIR ALAM,1769/3689/10153<br>
+                JONATABAG,KADAMTOLI<br>
+                DHAKA<br>
+                DHAKA<br>
+                BANGLADESH
+            </div>
+            <div class="text-[9pt]">
+                <table>
+                    <tr>
+                        <td class="font-semibold">Customer ID</td>
+                        <td class="font-semibold">:</td>
+                        <td>06890859</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Account No</td>
+                        <td class="font-semibold">:</td>
+                        <td>1068908590001</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Account Type</td>
+                        <td class="font-semibold">:</td>
+                        <td>Savings A/C</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Currency</td>
+                        <td class="font-semibold">:</td>
+                        <td>BDT</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Issue Date</td>
+                        <td class="font-semibold">:</td>
+                        <td>January 07, 2025</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb-4 text-[10pt] relative">
+            REF: <strong>MB 06890859010756240655</strong>
+        </div>
+
+        <!-- Title -->
+        <div class="text-center font-bold mb-2 relative">
+            STATEMENT OF ACCOUNT FOR THE PERIOD 08-Oct-2024 TO 07-Jan-2025
+        </div>
+
+        <!-- Table Header -->
+         <table class="transaction-table"> 
+            <tr>
+                <th>DATE</th>
+                <th>PARTICULARS</th>
+                <th>CHQ.NO</th>
+                <th class="text-right">WITHDRAW</th>
+                <th class="text-right">DEPOSIT</th>
+                <th class="text-right">BALANCE</th>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>Balance Forward</td>
+                <td></td>
+                <td class="text-right">0.00</td>
+                <td class="text-right">0.00</td>
+                <td class="text-right">0.00</td>
+            </tr>
+
+            <tr class="text-left">
+                <td>10-Mar-2025</td>
+                <td>CASH DEPOSIT</td>
+                <td></td>
+                <td class="text-right"></td>
+                <td class="text-right">4,000.00</td>
+                <td class="text-right">4,500.00</td>
+            </tr>
+
+            <tr class="text-left">
+                <td>12-Mar-2025</td>
+                <td>CRTR/Islami Bank Online Dhaka BD/</td>
+                <td></td>
+                <td class="text-right"></td>
+                <td class="text-right">500.00</td>
+                <td class="text-right">500.00</td>
+            </tr>
+         </table>
+
+        <!-- Footer -->
+        <div class="mt-8 border-t flex justify-between pt-2">
+            <div class="font-bold">
+                MD ADNAN REDUANUL
+            </div>
+            <div class="">
+                <img src="brac-footer-logo.png" class="h-12">
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

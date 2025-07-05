@@ -5,11 +5,9 @@
         </div>
         <div class="col-md-6 text-end">
             <p class="fw-bold fs-4 mb-2">Statement of Account</p>
-            <p class="fw-bold m-0">RAJSHAHI BRANCH</p>
-            <small>
-                ZERO POINT COMPLEX, HOUSE # 5716/5719,W # 12,
-                RAJSHAHI CITY CORPORATION, PS # BOALIA
-                RAJSHAHI
+            <p class="fw-bold m-0 text-uppercase">{{$branch_name}}</p>
+            <small class="text-uppercase">
+                {{$bank_address}}
             </small>
         </div>
     </div>
@@ -34,7 +32,7 @@
                     <tr>
                         <td>Period From</td>
                         <td>:</td>
-                        <td>01-11-2024 To 30-04-2025</td>
+                        <td>{{$statementFrom->format('d-m-Y')}} To {{$statementTo->format('d-m-Y')}}</td>
                     </tr>
                     <tr>
                         <td>Account Number </td>

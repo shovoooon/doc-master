@@ -26,13 +26,35 @@
     $pinCode = random_int(1000, 9999);
 @endphp
 
+@php
+    if (isset($hotel['hotel_name'])) {
+        $hotelName = $hotel['hotel_name'];
+    } else {
+        $hotelName = 'Rose Cottage Hotel';
+    }
+
+    if (isset($hotel['address'])) {
+        $hotelAddress = $hotel['address'] . ', ' . $hotel['zip'] . ' ' . $hotel['city'] . ', Malaysia';
+    } else {
+        $hotelAddress = 'No. 40 Jalan Impian Senai Utama, Taman Impian Senai, 81400 Senai, Johor, Malaysia';
+    }
+
+    if (isset($hotel['rawData']['photoUrls'])) {
+        $hotelImage = $hotel['rawData']['photoUrls'][0];
+    } else {
+        $hotelImage = 'https://lh3.googleusercontent.com/proxy/W_8ZfpgIqqPx1koY7xvGF-mpjo968Uo5nwRB4n5aw_TJ_g4n7QRDyXg-7G_mWbL0I6A1JqVwi-xzykJ7gHdaj6g29WH-iByFOvH5Owcp3CZ7zKVqljX6zBBzbPkE_YOErGZ2AsBrxaUYHMIDaPPgxZAszZua0Q=w253-h189-k-no';
+    }
+@endphp
+
+{{-- @dd($hotel) --}}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$title}}</title>
+    <title>{{ $title }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -77,11 +99,12 @@
         <div class="border border-gray-500 border-2 bg-gray-100 px-3 py-2">
             <div class="border-b border-gray-500 flex flex-row gap-2 pb-2">
                 <div class="flex-1 flex flex-row gap-2 items-center">
-                    <img src="{{ image_to_base64('hotel.png') }}" class="w-24 h-24">
+                    <img src="{{ image_to_base64($hotelImage) }}" class="w-24 h-24"
+                        alt="{{ $hotel['hotel_name'] ?? 'Hotel image' }}">
                     <div class="flex flex-col gap-1 text-xs">
-                        <span class="text-gray-900 font-bold text-base">The Concept Hotel KL- TBS</span>
+                        <span class="text-gray-900 font-bold text-base">{{ $hotelName }}</span>
                         <span class="text-gray-900 font-bold">Address: <span class="text-xs text-gray-900 font-normal">
-                                20 Jalan Tasik Selatan 4, 57000 Kuala Lumpur, Malaysia
+                                {{ $hotelAddress }}
                             </span>
                         </span>
                         <span class="text-gray-900 font-bold">Phone: <span class="text-xs text-gray-900 font-normal">
@@ -187,7 +210,7 @@
                         Payment information
                     </span>
                     <span class="text-xs text-gray-800">
-                        The Concept Hotel KL- TBS handles all payments. <br>
+                        {{ $hotelName }} handles all payments. <br>
                         This property accepts the following forms of payment: Cash only
                     </span>
                 </div>
@@ -196,7 +219,8 @@
                         Currency and exchange rate information
                     </span>
                     <span class="text-xs text-gray-800">
-                        You'll pay The Concept Hotel KL- TBS in MYR according to the exchange rate on the day of
+                        You'll pay {{ $hotelName }} in MYR according to the
+                        exchange rate on the day of
                         payment.
                         <br>
                         The amount displayed in BDT is just an estimate based on <strong>today's</strong> exchange rate
@@ -226,7 +250,7 @@
                     <div class="flex flex-col gap-2">
                         <div class="flex flex-col gap-1">
                             <span class="text-sm text-gray-950 font-bold">
-                                Standard Single Room <span>🚭</span>
+                                Deluxe Single Room <span>🚭</span>
                             </span>
                             <span class="text-gray-950 text-[10px] font-bold">Guest name:
                                 <span class="font-normal text-gray-900">
@@ -249,7 +273,7 @@
                                 rack • Toilet paper • Carbon monoxide detector
                             </span>
                             <span class="font-normal text-gray-900 text-[10px]"><strong>Bed Size(s):</strong>
-                                1 single bed (90-130 cm wide)
+                                1 double bed (130-145 cm wide)
                             </span>
                         </div>
                     </div>
@@ -299,8 +323,17 @@
                             <span class="ml-1 text-sm font-bold">Important information</span>
                         </div>
                         <div class="px-8">
-                            <span class="text-[9px]">This property will not accommodate hen, stag or similar
-                                parties.</span>
+                            <div class="text-[9px] mb-1">This property will not accommodate hen, stag or similar parties.
+                            </div>
+
+                            @isset($hotel['hotel_important_information_with_codes'])
+                                @foreach ($hotel['hotel_important_information_with_codes'] as $hotel_info)
+                                    <div class="text-[9px] mb-1">
+                                        {{ $hotel_info['phrase'] }}
+                                    </div>
+                                @endforeach
+
+                            @endisset
                         </div>
                     </div>
 
@@ -353,7 +386,8 @@
 
                             <div class="mb-2 text-[9px] leading-none">
                                 <span>For any questions related to the property, you can contact The Concept
-                                    Hotel KL- TBS directly on: +60 11 5621 5392</span>
+                                    {{ $hotelName }} directly on: +60 11 5621
+                                    5392</span>
                             </div>
 
                             <div class="mb-1 text-[9px] leading-none border-b pb-1 border-gray-300">
@@ -406,7 +440,7 @@
         }).addTo(map);
 
         L.marker([49.278983, -123.123233]).addTo(map)
-            .bindPopup('The Concept Hotel KL- TBS')
+            .bindPopup('Hotel 101 Ulu Tiram')
             .openPopup();
     </script>
 </body>

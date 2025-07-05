@@ -1,10 +1,11 @@
 @php
-    $issueDate = \Carbon\Carbon::parse($ticket_issued)->format('d F, Y');
-    $onwardDate = \Carbon\Carbon::parse($departure)->format('D d M, Y');
-    $returnDate = \Carbon\Carbon::parse($return)->format('D d M, Y');
-    $passportExpiryDate = \Carbon\Carbon::parse($passport_expiry)->format('d M Y');
+$issueDate = \Carbon\Carbon::parse($ticket_issued)->format('d M Y');
+$onwardDate = \Carbon\Carbon::parse($departure)->format('D d M, Y');
+$returnDate = \Carbon\Carbon::parse($return)->format('D d M, Y');
+$passportExpiryDate = \Carbon\Carbon::parse($passport_expiry)->format('d M Y');
 
-    $pnr = generate_airline_pnr();
+$pnr = generate_airline_pnr();
+$ticket = rand(1111111111111, 9999999999999);
 @endphp
 
 <!DOCTYPE html>
@@ -72,7 +73,7 @@
                     <span class="text-sm text-gray-700">09 AM - 08 PM</span>
                 </div>
                 <div class="flex gap-1">
-                    <span class="text-sm text-gray-900 font-semibold">Ticket support:</span>
+                    <span class="text-sm text-gray-900 font-semibold">Ticket Support:</span>
                     <span class="text-sm text-gray-700">601123882104</span>
                 </div>
                 <div>
@@ -85,6 +86,10 @@
                 <div class="flex gap-1">
                     <span class="text-sm text-gray-900 font-semibold">Email:</span>
                     <span class="text-sm text-gray-700">globalairtrip.gat@gmail.com</span>
+                </div>
+                <div class="flex gap-1">
+                    <span class="text-sm text-gray-900 font-semibold">Issue Date:</span>
+                    <span class="text-sm text-gray-700">{{ $issueDate }} - 10:{{rand(10, 59)}} PM</span>
                 </div>
             </div>
             <div class="flex items-center">
@@ -101,8 +106,22 @@
             </div>
         </div>
         <div class="text-center">
-            <span class="text-xl text-blue-700 font-bold">E-BOOKING</span>
+            <span class="text-xl text-blue-700 font-bold">E-TICKET</span>
         </div>
+        <div class="flex justify-between items-center w-full border border-gray-300 mb-1">
+            <!-- Left Side -->
+            <div class="w-1/2 text-left">
+                <p class="font-semibold">Ticket: {{$ticket}}</p>
+            </div>
+        
+            <!-- Right Side -->
+            <div class="w-1/2 text-right">
+                    <button class="bg-blue-700 text-white font-semibold py-1 px-2 rounded-r">
+                    CONFIRMED
+                    </button>
+            </div>
+        </div>
+        
         <div class="flex flex-col">
             <div class="flex items-center gap-1 mb-1">
                 <i class="ri-user-line text-xl text-gray-500"></i>
@@ -112,37 +131,51 @@
                 <thead>
                     <tr class="bg-blue-700 text-white">
                         <th class="border border-gray-300 text-left px-2 py-1">PASSENGER</th>
-                        <th class="border border-gray-300 text-center px-2 py-1">PASSPORT NO</th>
-                        <th class="border border-gray-300 text-center px-2 py-1">PASSPORT EXPIRY</th>
-                        <th class="border border-gray-300 text-center px-2 py-1">TICKET</th>
+                        <th class="border border-gray-300 text-left px-2 py-1">PASSPORT NO</th>
+                        <th class="border border-gray-300 text-left px-2 py-1">PASSPORT EXPIRY</th>
+                        <th class="border border-gray-300 text-left px-2 py-1">AIRLINE PNR</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="border border-gray-300 text-left px-2 py-1">{{ $name }}</td>
-                        <td class="border border-gray-300 text-center px-2 py-1">{{ $passport_no }}</td>
-                        <td class="border border-gray-300 text-center px-2 py-1 capitalize">{{ $passportExpiryDate }}
+                        <td class="border border-gray-300 text-left px-2 py-1">{{ $passport_no }}</td>
+                        <td class="border border-gray-300 text-left px-2 py-1 capitalize">{{ $passportExpiryDate }}
                         </td>
-                        <td class="border border-gray-300 text-center px-2 py-1">N/A</td>
+                        <td class="border border-gray-300 text-left px-2 py-1">{{ $pnr }}</td>
                     </tr>
+
+                    {{-- Children --}}
+                    @if(isset($children) && count($children) > 0)
+                        @foreach($children as $index => $child)
+                            <tr>
+                                <td class="border border-gray-300 text-left px-2 py-1">{{ $child['name'] }}</td>
+                                <td class="border border-gray-300 text-left px-2 py-1">{{ $child['passport_no'] }}</td>
+                                <td class="border border-gray-300 text-left px-2 py-1 1 capitalize">
+                                    {{ \Carbon\Carbon::parse($child['passport_expiry'])->format('d M Y') }}
+                                </td>
+                                <td class="border border-gray-300 text-left px-2 py-1">{{generate_airline_pnr()}}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
-            <table class="w-full border border-gray-300 border-collapse text-[11px] mt-2">
+            {{-- <table class="w-full border border-gray-300 border-collapse text-[11px] mt-2">
                 <thead>
                     <tr class="bg-blue-700 text-white">
-                        <th class="border border-gray-300 text-left px-2 py-1">AIRLINE PNR</th>
-                        <th class="border border-gray-300 text-center px-2 py-1">GDS PNR</th>
-                        <th class="border border-gray-300 text-center px-2 py-1">DATE OF ISSUE</th>
+                        <th class="border border-gray-300 text-left px-2 py-1">TICKET</th>
+                        <th class="border border-gray-300 text-left px-2 py-1">GDS PNR</th>
+                        <th class="border border-gray-300 text-left px-2 py-1">DATE OF ISSUE</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="border border-gray-300 text-left px-2 py-1">{{ $pnr }}</td>
-                        <td class="border border-gray-300 text-center px-2 py-1">{{ $pnr }}</td>
-                        <td class="border border-gray-300 text-center px-2 py-1">10:05 PM - {{ $issueDate }}</td>
+                        <td class="border border-gray-300 text-left px-2 py-1">{{ $pnr }}</td>
+                        <td class="border border-gray-300 text-left px-2 py-1">{{ $issueDate }} - 10:05 PM</td>
                     </tr>
                 </tbody>
-            </table>
+            </table> --}}
         </div>
         <div class="flex flex-col gap-1 mt-3">
             <div class="flex items-center gap-1">
@@ -155,7 +188,7 @@
                     <tr class="bg-blue-700 text-white">
                         <th class="border border-gray-300 text-left px-2 py-1">FLIGHT</th>
                         <th class="border border-gray-300 text-left px-2 py-1">FROM</th>
-                        <th class="border border-gray-300 text-center px-2 py-1">DURATION</th>
+                        <th class="border border-gray-300 text-left px-2 py-1">DURATION</th>
                         <th class="border border-gray-300 text-left px-2 py-1">TO</th>
                         <th class="border border-gray-300 text-left px-2 py-1">DETAILS</th>
                     </tr>
@@ -179,7 +212,7 @@
                                 Terminal: 1
                             </div>
                         </td>
-                        <td class="border border-gray-300 text-center px-2 py-1">
+                        <td class="border border-gray-300 text-left px-2 py-1">
                             <div class="flex flex-col items-center gap-1">
                                 <img src="{{ image_to_base64('airplane-icon.png') }}" alt=""
                                     class="w-7 h-auto">
@@ -234,7 +267,7 @@
                                 Terminal: M
                             </div>
                         </td>
-                        <td class="border border-gray-300 text-center px-2 py-1">
+                        <td class="border border-gray-300 text-left px-2 py-1">
                             <div class="flex flex-col items-center gap-1">
                                 <img src="{{ image_to_base64('airplane-icon.png') }}" alt=""
                                     class="w-7 h-auto">
